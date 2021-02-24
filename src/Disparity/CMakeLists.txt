@@ -8,10 +8,11 @@ PROJECT(Disparity VERSION ${APP_VERSION} LANGUAGES CXX)
 
 # Install packages.
 MESSAGE(STATUS "Installing package dependencies...")
-VCPKG_INSTALL(OpenCV)
+VCPKG_INSTALL(opencv[contrib,core,dnn,jpeg,png])
+#VCPKG_INSTALL(opencv[contrib,cuda,core,dnn,jpeg,png])
 
 # Resolve package dependencies.
-FIND_PACKAGE(OpenCV CONFIG REQUIRED core)
+FIND_PACKAGE(OpenCV CONFIG REQUIRED core stereo)
 
 ADD_EXECUTABLE(Disparity
     "demo.hxx"
