@@ -348,3 +348,11 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Visual Studio (Code) config directories.
+.vs/
+.vscode/
+
+# CMake build artifacts.
+out/
+install/
