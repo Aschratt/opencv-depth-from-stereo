@@ -9,3 +9,4 @@
 #include <opencv2/core/utils/filesystem.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/stereo.hpp>
+#include <opencv2/cudastereo.hpp>

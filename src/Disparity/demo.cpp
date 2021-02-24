@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
         "{matcher m      | 0    | Stereo matcher algorithm: 0 - binary BM (default), 1 - binary SGBM. }"
         "{disparities d  | 16   | Number of disparity levels. }"
         "{block_size bs  | 9    | Size of a pixel kernel for comparison. }"
+        "{cuda c         |      | Use CUDA version of the stereo matcher (only works with binary BM matcher). }"
     ;
 
     // Parse command line arguments.
@@ -40,6 +41,7 @@ int main(int argc, char* argv[])
     int matcher = parser.get<int>("m");
     int blockSize = parser.get<int>("bs");
     int disparities = parser.get<int>("d");
+    bool useCuda = parser.has("cuda");
 
     if (!parser.check())
     {
@@ -64,6 +66,9 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    if (useCuda && matcher == STEREO_MATCHER_SGBM)
+        std::cout << "Warning: CUDA can only be used with the binary BM matcher. Matching will be performed at CPU." << std::endl;
+
     // Get all files from the left and right directory.
     std::vector<String> leftImages, rightImages;
     fs::glob(leftDir, "*.png", leftImages);
@@ -77,7 +82,9 @@ int main(int argc, char* argv[])
     switch (matcher)
     {
     case STEREO_MATCHER_BM:
-        stereoMatcher = stereo::StereoBinaryBM::create(disparities, blockSize);
+        stereoMatcher = useCuda ?
+            cuda::StereoBM::create(disparities, blockSize);
+            stereo::StereoBinaryBM::create(disparities, blockSize);
         break;
     case STEREO_MATCHER_SGBM:
         stereoMatcher = stereo::StereoBinarySGBM::create(0, disparities, blockSize);
