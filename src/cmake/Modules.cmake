@@ -6,7 +6,7 @@
 
 # Setup default module path.
 IF("${CMAKE_MODULE_PATH}" STREQUAL "")
-    SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/" CACHE PATH "Module directory." FORCE)
+    SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/src/cmake/" CACHE PATH "Module directory." FORCE)
 ENDIF("${CMAKE_MODULE_PATH}" STREQUAL "")
 
 # Bootstrap vcpkg
